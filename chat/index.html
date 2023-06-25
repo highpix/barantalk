@@ -1,0 +1,31 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Connecting to server</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="preloader" id="g2">
+        <div class="preloader--box-logo">
+            <img src="img/logo.svg" alt="">
+        </div>
+        <div class="preloader--moving-text">
+            <div class="moving-text"></div>
+        </div>
+    </div>
+    <main class="chat">
+        <div class="chat--messages">
+        </div>
+
+        <form class="chat--menu">
+            <div type="delete" class="chat--menu-button chat--menu-del"></div>
+            <input type="text" class="chat--menu-input">
+            <input type="submit" class="chat--menu-button chat--menu-submit" value="">
+        </form>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/markdown-it/dist/markdown-it.min.js"></script>
+    <script src="chat.js"></script>
+    <script src="movingText.js"></script>
+</body>
+</html>
