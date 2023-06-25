@@ -1,0 +1,54 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Roboto, sans-serif;
+}
+img {
+    width: auto;
+    height: 100%;
+}
+body {
+    background: #0C0C0C;
+}
+.login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+.login--box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 55px;
+}
+.login--box-img {
+    width: 107.555px;
+    height: 87px;
+}
+.login--box-form {
+    display: flex;
+    gap: 20px;
+}
+.login--box-input {
+    width: 410px;
+    height: 80px;
+    padding-left: 17px;
+    border: 0;
+    border-radius: 15px;
+    background: #FFF;
+    font-size: 34px;
+    font-weight: 400;
+    color: #737373;
+}
+.login--box-submit {
+    width: 80px;
+    height: 80px;
+    border: 0;
+    border-radius: 15px;
+    background: no-repeat center url("../img/right.png"), #FF7AAA;
+    background-size: auto 48px;
+    cursor: pointer;
+}
