@@ -8,7 +8,7 @@
 
 <h2>🚀 Демо</h2>
 
-[\[vitalikparkur.pro\]](https://highpix.github.io/barantalk)
+[\[vitalikparkur.pro\]](https://highpix.github.io/barantalk) [\[Проверить доступность\]](https://stats.uptimerobot.com/ELwPlh13gg)
 
 Это закрытое демо, для получения токена обратитесь ко мне в [Telegram](https://t.me/dengimod3)
 <h2>Пользовательский интерфейс:</h2>
