@@ -92,7 +92,7 @@ body {
     cursor: pointer;
 }
 .chat--menu-del {
-    --url: url("img/trashcan.png");
+    --url: url("../img/trashcan.png");
 }
 .chat--menu-input {
     width: 100%;
@@ -105,7 +105,7 @@ body {
     font-size: 36px;
 }
 .chat--menu-submit {
-    --url: url("img/arrow.png");
+    --url: url("../img/arrow.png");
 }
 
 .blob {
