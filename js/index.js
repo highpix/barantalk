@@ -2,7 +2,7 @@ form = document.getElementById("loginForm");
 tokenInput = document.getElementById("tokenInput");
 
 function redirection() {
-    window.location.replace("chat/chat.html");
+    window.location.replace("chat/index.html");
 }
 
 function checkToken() {
