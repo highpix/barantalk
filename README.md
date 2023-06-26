@@ -13,7 +13,7 @@
 Это закрытое демо, для получения токена обратитесь ко мне в [Telegram](https://t.me/dengimod3)
 <h2>Пользовательский интерфейс:</h2>
 
-<img src="https://sun4-18.userapi.com/impg/Klz1e1vgIamtpvi3gBQ9ZuSeD_LBDc5hTBqq3g/cNaGDDj0d7k.jpg?size=1280x723&amp;quality=96&amp;sign=ec3a4e83930579372a78b2f4102de818&amp;type=album" alt="project-screenshot">
+<img src="https://i.ibb.co/8j8PYtT/baran.png" alt="project-screenshot">
 
   
   
