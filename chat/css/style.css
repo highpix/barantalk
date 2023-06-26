@@ -141,6 +141,7 @@ main {
     padding: 17px 30px;
     margin: 7.5px 0;
     border-radius: 22.5px;
+    animation: 0.3s blob-anim;
 }
 
 @keyframes blob-anim {
