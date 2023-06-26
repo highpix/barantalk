@@ -35,7 +35,7 @@ function hideNotification() {
 
 function buttonClick(event) {
     const headDom = event.target.parentNode;
-    let text = headDom.previousSibling.innerHTML.replace("&lt;", "<").replace("&gt;", ">");
+    let text = headDom.previousSibling.innerHTML.replaceAll("&lt;", "<").replaceAll("&gt;", ">");
     showNotification("Text copied to clipboard!")
     navigator.clipboard.writeText(text);
 }
