@@ -6,13 +6,37 @@ const token = localStorage.getItem("token");
 const chatMenuForm = querySelector(".chat--menu");
 const messages = querySelector(".chat--messages");
 const chatDeleteButton = querySelector('.chat--menu-button.chat--menu-del');
+const notification = document.getElementById('notification');
+const notificationText = document.getElementById('notification-text');
 
-const notification = (text) => console.log(text);
+const logger = (text) => console.log(text);
 const processMarkdown = (text) => window.markdownit().render(text);
+
+function showNotification(text) {
+    notificationText.textContent = text;
+    
+    let textWidth = notificationText.offsetWidth * 1.1;
+    let iconWidth = 48; 
+    let totalWidth = textWidth + iconWidth + 40;
+    notification.style.width = totalWidth + 'px';
+
+    notification.style.top = '20px';
+    notification.style.opacity = '1';
+
+    setTimeout(() => {
+        hideNotification();
+    }, 3000);
+}
+
+function hideNotification() {
+    notification.style.top = '-100px';
+    notification.style.opacity = '0';
+}
 
 function buttonClick(event) {
     const headDom = event.target.parentNode;
     let text = headDom.previousSibling.innerHTML.replace("&lt;", "<").replace("&gt;", ">");
+    showNotification("Text copied to clipboard!")
     navigator.clipboard.writeText(text);
 }
 
@@ -57,10 +81,11 @@ async function handleRequest(url, successCallback, errorCallback = () => {}) {
 
 async function handleChatDelete(event) {
     event.preventDefault();
+    showNotification("Cleaning up history...")
     handleRequest(`${urlApi}/api/clearContext?token=${token}`, () => {
         localStorage.setItem("token", token);
         messages.innerHTML = '';
-    }, notification);
+    }, logger);
 }
 
 async function handleMessageSubmit(event) {
@@ -75,7 +100,7 @@ async function handleMessageSubmit(event) {
 
         handleRequest(`${urlApi}/api/request?data=${message}&token=${token}`, (data) => {
             addMessage(data.response, "bot");
-        }, notification);
+        }, logger);
     }
 }
 
@@ -88,7 +113,7 @@ function displayChatHistory(chatHistory) {
 }
 
 async function getHistoryChat(token) {
-    handleRequest(`${urlApi}/api/chatHistory?token=${token}`, displayChatHistory, notification);
+    handleRequest(`${urlApi}/api/chatHistory?token=${token}`, displayChatHistory, logger);
 }
 
 function showPreloader() {
@@ -107,9 +132,9 @@ function openChat(token) {
 
 async function getLoad(token) {
     handleRequest(`${urlApi}/api/serverStatus?token=${token}`, (data) => {
-        notification(data.server);
+        logger(data.server);
         openChat(token);
-    }, notification);
+    }, logger);
 }
 
 function checkToken() {
