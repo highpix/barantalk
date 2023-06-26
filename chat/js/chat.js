@@ -1,26 +1,41 @@
-const preloader = document.querySelector(".preloader");
-const chat = document.querySelector(".chat");
+const querySelector = (selector) => document.querySelector(selector);
+const preloader = querySelector(".preloader");
+const chat = querySelector(".chat");
 const urlApi = "https://python.yagotka.repl.co";
 const token = localStorage.getItem("token");
-const chatMenuForm = document.querySelector(".chat--menu");
-const messages = document.querySelector(".chat--messages");
-const chatDeleteButton = document.querySelector('.chat--menu-button.chat--menu-del');
+const chatMenuForm = querySelector(".chat--menu");
+const messages = querySelector(".chat--messages");
+const chatDeleteButton = querySelector('.chat--menu-button.chat--menu-del');
 
-function notification(text) {
-    console.log(text);
+const notification = (text) => console.log(text);
+const processMarkdown = (text) => window.markdownit().render(text);
+
+function buttonClick(event) {
+    const headDom = event.target.parentNode;
+    let text = headDom.previousSibling.innerHTML.replace("&lt;", "<").replace("&gt;", ">");
+    navigator.clipboard.writeText(text);
 }
 
-function processMarkdown(text) {
-  const md = window.markdownit();
-  return md.render(text);
+function addHeadPre(obj) {
+    const head = obj.querySelector("pre").appendChild(document.createElement("div"));
+    head.className = "blob--head";
+    const h2 = head.appendChild(document.createElement("h2"));
+    h2.innerHTML = obj.querySelector("pre code").className.match(/-(.*)/)[1];
+    const button = head.appendChild(document.createElement("button"));
+    button.innerHTML = "copy";
+    button.addEventListener("click", buttonClick);
 }
 
 function addMessage(message, sender) {
     const blob = document.createElement("div");
     blob.className = `blob ${sender}`;
     blob.innerHTML = processMarkdown(message);
-    messages.appendChild(blob);
+    messages.append(blob);
     messages.scrollTop = messages.scrollHeight;
+    if (sender == "bot") {
+        const re = message.match(/```(.*?)\n/);
+        re && addHeadPre(blob, re[1]);
+    }
 }
 
 async function fetchApi(url) {
@@ -36,14 +51,8 @@ async function fetchApi(url) {
 }
 
 async function handleRequest(url, successCallback, errorCallback = () => {}) {
-    const response = await fetchApi(url);
-    const data = await response.json();
-    
-    if (response.ok) {
-        successCallback(data);
-    } else {
-        errorCallback(response.status);
-    }
+    const response = await fetchApi(url), data = await response.json();
+    response.ok ? successCallback(data) : errorCallback(response.status);
 }
 
 async function handleChatDelete(event) {
@@ -57,7 +66,7 @@ async function handleChatDelete(event) {
 async function handleMessageSubmit(event) {
     event.preventDefault();
 
-    const input = document.querySelector(".chat--menu-input");
+    const input = querySelector(".chat--menu-input");
     const message = input.value.trim();
 
     if (message) {
@@ -74,8 +83,7 @@ function displayChatHistory(chatHistory) {
     for (const messageId in chatHistory) {
         const message = chatHistory[messageId];
         const messageIssuer = messageId.split('-')[0];
-        const sender = messageIssuer === 'user' ? 'user' : 'bot';
-        addMessage(message, sender);
+        addMessage(message, messageIssuer === 'user' ? 'user' : 'bot');
     }
 }
 
