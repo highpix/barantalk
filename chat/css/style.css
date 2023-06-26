@@ -2,20 +2,32 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    font-family: 400 Roboto, sans-serif;
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
 }
 
 img {
     width: auto;
     height: 100%;
 }
+
+input {
+    border: 0;
+}
 body {
     background: #0C0C0C;
 }
+
+main {
+    background: no-repeat center url("../img/blackBrain.svg");
+    background-size: auto 108px;
+}
+
 :root {
     --display-preloader: flex;
     --display-chat: none;
 }
+
 .preloader {
     display: var(--display-preloader);
     justify-content: center;
@@ -30,6 +42,7 @@ body {
     height: 100%;
     background: #0C0C0C;
 }
+
 .preloader--box-logo {
     width: 148px;
     height: 38px;
@@ -41,9 +54,11 @@ body {
 	font-size: 28px;
 	color: #fafafa;
 }
+
 .dud {
 	color: #757575;
 }
+
 .chat {
     display: flex;
     flex-direction: column;
@@ -66,22 +81,29 @@ body {
     align-items: flex-start;
     overflow-y: auto;
     border-radius: 19px;
+    font-size: 26px;
+    line-height: 1.4;
+    animation: 1s blob-anim;
 }
+
 .chat--messages::-webkit-scrollbar {
     background: #0C0C0C;
     width: 7px;
 }
+
 .chat--messages::-webkit-scrollbar-thumb {
     background: #4e4e4e;  
     border-radius: 6px;
     height: 10px;
 }
+
 .chat--menu {
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 37px;
 }
+
 .chat--menu-button {
     flex-shrink: 0;
     width: 112px;
@@ -91,9 +113,11 @@ body {
     background-size: auto 48px;
     cursor: pointer;
 }
+
 .chat--menu-del {
     --url: url("../img/trashcan.png");
 }
+
 .chat--menu-input {
     width: 100%;
     max-width: 2560px;
@@ -104,19 +128,29 @@ body {
     color: #737373;
     font-size: 36px;
 }
+
 .chat--menu-submit {
     --url: url("../img/arrow.png");
 }
 
 .blob {
-    display: inline-block;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
     max-width: 60%;
-    padding: 15px 30px;
+    padding: 17px 30px;
     margin: 7.5px 0;
     border-radius: 22.5px;
-    font-size: 27px;
-    line-height: 1.4;
-    font-family: 'Roboto', sans-serif;
+}
+
+@keyframes blob-anim {
+    0% {
+        opacity: 0;
+    } 
+
+    100% {
+        opacity: 1;
+    }
 }
 
 .blob.user {
@@ -130,19 +164,53 @@ body {
     color: #0C0C0C;
     align-self: flex-start;
 }
-
-pre {
-  background-color: #292929;
-  color: white;
-  border: solid 1px #cccccc;
-  border-radius: 10px;
-  padding: 10px;
-  overflow-x: auto;
-  white-space: pre-wrap;
-  word-wrap: break-word;
+.blob ol, .blob li, .blob ul {
+    margin-left: 30px;
 }
-
-code {
-  font-family: 'Roboto Mono', monospace;
-  font-size: 0.9em;
+pre {
+    position: relative;
+    background-color: #161616;
+    color: #FFF;
+    border-radius: 15px 15px 10px 10px;
+    padding: 55px 30px 20px 30px;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-size: 24px;
+}
+.blob--head {
+    content: "";
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 40px;
+    width: 100%;
+    padding: 0 12px;
+    border-radius: 10px 10px 0px 0px;
+    background: #292929;
+}
+pre h2 {
+    font-size: 21px;
+}
+pre button {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    padding: 1.5px 5px;
+    border: 0;
+    border-radius: 3px;
+    background: #444;
+    color: #FFF;
+    font-size: 19px;
+    cursor: pointer;
+}
+pre button::before {
+    content: "";
+    background: no-repeat center url("../img/Copy.png");
+    background-size: auto 16px;
+    width: 16px;
+    height: 16px;
 }
