@@ -95,6 +95,8 @@ function addHeadPre(obj) {
 
 function addMessage(message, sender) {
     const blob = document.createElement("div");
+    let splitMessage = message.replaceAll("\n", "\\n");
+    console.log(splitMessage);
     blob.className = `blob ${sender}`;
     blob.innerHTML = processMarkdown(message);
     messages.append(blob);
