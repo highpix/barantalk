@@ -8,6 +8,7 @@ const messages = querySelector(".chat--messages");
 const chatDeleteButton = querySelector('.chat--menu-button.chat--menu-del');
 const notification = document.getElementById('notification');
 const notificationText = document.getElementById('notification-text');
+const textarea = document.getElementById("textarea");
 
 const logger = (text) => console.log(text);
 const processMarkdown = (text) => window.markdownit().render(text);
@@ -33,6 +34,48 @@ function hideNotification() {
     notification.style.opacity = '0';
 }
 
+
+function skeleton() {
+    const element = document.createElement("div");
+    element.className = "skeleton";
+    messages.append(element);
+
+    for (let i = 0; i != 6; i++) {
+        const line = document.createElement("div");
+        line.className = `skeleton--line`;
+        element.append(line);
+    }
+}
+
+function deletSkeleton() {
+    const element = document.querySelector(".skeleton");
+    element.parentNode.removeChild(element);
+}
+
+function textareaKeydown(event) {
+    if (event.key === "Enter") {
+        if (!event.shiftKey) {
+            event.preventDefault();
+            handleMessageSubmit(event);
+        }
+    }
+}
+
+function textareaCheck(event) {
+    const text = textarea.value;
+    const textSplit = text.split("\n");
+    textSplit.length > 6 ? textarea.style.setProperty("overflow-y", "auto") : textarea.style.setProperty("overflow-y", "hidden");
+
+    if (textSplit.length > 1 && textSplit.length < 6) {
+        textarea.style.setProperty("--height-textarea", `${(textSplit.length * 45)+ 44}px`);
+    } else if (textSplit.length === 1) {
+        textarea.style.setProperty("--height-textarea", "92px");
+    }
+}
+textarea.addEventListener("input", textareaCheck);
+textarea.addEventListener("keydown", textareaKeydown);
+
+
 function buttonClick(event) {
     const headDom = event.target.parentNode;
     let text = headDom.previousSibling.innerHTML.replaceAll("&lt;", "<").replaceAll("&gt;", ">");
@@ -52,10 +95,13 @@ function addHeadPre(obj) {
 
 function addMessage(message, sender) {
     const blob = document.createElement("div");
+    let splitMessage = message.replaceAll("\n", "\\n");
+    console.log(splitMessage);
     blob.className = `blob ${sender}`;
     blob.innerHTML = processMarkdown(message);
     messages.append(blob);
     messages.scrollTop = messages.scrollHeight;
+
     if (sender == "bot") {
         const re = message.match(/```(.*?)\n/);
         re && addHeadPre(blob, re[1]);
@@ -92,13 +138,17 @@ async function handleMessageSubmit(event) {
     event.preventDefault();
 
     const input = querySelector(".chat--menu-input");
-    const message = input.value.trim();
+    let message = input.value.trim();
 
     if (message) {
         addMessage(message, "user");
         input.value = "";
+        textareaCheck();
+        skeleton();
+        message = message.replaceAll("\n", "($_->![NL]!<-_$)");
 
         handleRequest(`${urlApi}/api/request?data=${message}&token=${token}`, (data) => {
+            deletSkeleton();
             addMessage(data.response, "bot");
         }, logger);
     }
@@ -108,7 +158,7 @@ function displayChatHistory(chatHistory) {
     for (const messageId in chatHistory) {
         const message = chatHistory[messageId];
         const messageIssuer = messageId.split('-')[0];
-        addMessage(message, messageIssuer === 'user' ? 'user' : 'bot');
+        addMessage(message.replaceAll('($_->![NL]!<-_$)', '\n'), messageIssuer === 'user' ? 'user' : 'bot');
     }
 }
 
